@@ -14,8 +14,8 @@ The usual reactions are bad: ignoring the bot, or gaming it. This skill takes th
 
 ## What it does
 
-1. **Find** — reviews your diff as the harshest reviewer possible, using a checklist ordered by your bot's REAL finding frequency, plus genuine best practices beyond the checklist.
-2. **Fix** — everything actionable, in severity order, verified by your build + full test suites, batched into a single push.
+1. **Find** — reviews your diff against the freshly fetched `origin/<target>` (plus any uncommitted work, flagged as not yet in the PR) as the harshest reviewer possible, using a checklist ordered by your bot's REAL finding frequency, plus genuine best practices beyond the checklist.
+2. **Fix** — everything actionable, in severity order, then re-reviews the fixes themselves (the bot will see them too), verified by your build + full test suites, batched into a single push.
 3. **Prove** — recurring false positives get a proof table (compiler evidence, auto-generated file, nonexistent rule id), so resolving those threads is honest and takes seconds.
 
 It is explicitly NOT a bypass tool. The skill's red-flags section treats "dismissing a finding because fixing is tedious" as a violation.

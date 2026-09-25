@@ -15,7 +15,7 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 
 ## Phase 1 — Find (adversarial)
 
-1. Diff under review: `git diff <target-branch>...HEAD`. Only files in the diff — EXCEPTION: for "method signature drift", grep call sites across the WHOLE repo.
+1. Diff under review: `git fetch origin <target>` then `git diff origin/<target>...HEAD` (a stale local target branch yields the wrong merge-base), plus `git diff HEAD` and `git status --short` for uncommitted/untracked work — review it too, but warn that the PR won't see it until it is committed. Only files in the diff — EXCEPTION: for "method signature drift", grep call sites across the WHOLE repo.
 2. Pick the checklist: `checklist.local.md` next to this file if it exists (your calibration; also read `false-positives.local.md` if present), otherwise the default `checklist.md`.
 3. Act as the harshest reviewer possible: apply that checklist AND genuine best practices the checklist doesn't cover. Read the full flow of touched components — functional regressions never come from checklists alone.
 4. Per-finding format: `file:line — [category][HIGH|MEDIUM|LOW] finding — proposed fix`. Line = new side of the diff (HEAD). Category = mechanism; severity = impact (a permission-scope regression found via a UI checklist item is HIGH).
@@ -23,7 +23,9 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 
 ## Phase 2 — Fix
 
+- Record the starting point first: `git rev-parse HEAD` → `<pre-fix-sha>`.
 - Fix ALL actionable findings, in severity order, before any push. Large fixes get delegated with exact instructions; nothing is postponed "for another PR" without an explicit, recorded decision.
+- Re-run Phase 1 on your own fixes (`git diff <pre-fix-sha>` covers committed and uncommitted ones) — the bot reviews them in the same push. Repeat until a pass yields no new actionable finding.
 - Mandatory final step: run the project's build + full test suites for every side the diff touches. Inspection never replaces the run.
 - One single push with everything: bots that run per-push re-post findings each time — batching means fewer threads and less noise.
 
