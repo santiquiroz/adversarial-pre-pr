@@ -11,7 +11,7 @@ Many teams run an automated AI reviewer in their PR pipeline. These bots block c
 
 **Purpose: arrive at the PR with the code already fixed.** This is an adversarial quality gate, not a bypass mechanism. Honesty rule: a finding may only be dismissed as a false positive when it can be PROVEN (valid syntax verifiable by the compiler, auto-generated file, nonexistent rule); everything else gets fixed.
 
-This skill ships with an example catalog for .NET + Angular (see `examples/`). Calibrate your own from your reviewer's actual comments — `docs/calibration-azure-devops.md` shows how.
+This skill ships with an example catalog for .NET + Angular (see `references/catalog-dotnet-angular.md`). Calibrate your own from your reviewer's actual comments — `references/calibration-azure-devops.md` shows how.
 
 ## Phase 1 — Find (adversarial)
 
@@ -28,7 +28,7 @@ This skill ships with an example catalog for .NET + Angular (see `examples/`). C
 
 ## Calibrating your catalog
 
-1. Mine your reviewer's real comments (for Azure DevOps: PR threads REST API — see `docs/calibration-azure-devops.md`).
+1. Mine your reviewer's real comments (for Azure DevOps: PR threads REST API — see `references/calibration-azure-devops.md`).
 2. Categorize by MECHANISM (null-safety, input validation, error handling, ORM usage, signature drift, test asserts, framework-specific) and count frequency.
 3. Order your checklist by real frequency — review passes become efficient because you look for what the bot actually finds.
 4. Separate recurring PROVABLE false positives into their own table, each with its proof written down (so thread resolution is honest and fast).
