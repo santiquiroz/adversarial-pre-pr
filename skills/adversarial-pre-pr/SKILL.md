@@ -16,9 +16,10 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 ## Phase 1 — Find (adversarial)
 
 1. Diff under review: `git diff <target-branch>...HEAD`. Only files in the diff — EXCEPTION: for "method signature drift", grep call sites across the WHOLE repo.
-2. Act as the harshest reviewer possible: apply your calibrated checklist AND genuine best practices the checklist doesn't cover. Read the full flow of touched components — functional regressions never come from checklists alone.
-3. Per-finding format: `file:line — [category][HIGH|MEDIUM|LOW] finding — proposed fix`. Line = new side of the diff (HEAD). Category = mechanism; severity = impact (a permission-scope regression found via a UI checklist item is HIGH).
-4. Report in TWO blocks: **Actionable** and **Provable false positives** (each with its proof, not an excuse).
+2. Pick the checklist: `checklist.local.md` next to this file if it exists (your calibration; also read `false-positives.local.md` if present), otherwise the default `checklist.md`.
+3. Act as the harshest reviewer possible: apply that checklist AND genuine best practices the checklist doesn't cover. Read the full flow of touched components — functional regressions never come from checklists alone.
+4. Per-finding format: `file:line — [category][HIGH|MEDIUM|LOW] finding — proposed fix`. Line = new side of the diff (HEAD). Category = mechanism; severity = impact (a permission-scope regression found via a UI checklist item is HIGH).
+5. Report in TWO blocks: **Actionable** and **Provable false positives** (each with its proof, not an excuse).
 
 ## Phase 2 — Fix
 
@@ -30,8 +31,8 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 
 1. Mine your reviewer's real comments (for Azure DevOps: PR threads REST API — see `references/calibration-azure-devops.md`).
 2. Categorize by MECHANISM (null-safety, input validation, error handling, ORM usage, signature drift, test asserts, framework-specific) and count frequency.
-3. Order your checklist by real frequency — review passes become efficient because you look for what the bot actually finds.
-4. Separate recurring PROVABLE false positives into their own table, each with its proof written down (so thread resolution is honest and fast).
+3. Order your checklist by real frequency and save it as `checklist.local.md` next to this file (git-ignored; it replaces `checklist.md`) — review passes become efficient because you look for what the bot actually finds.
+4. Separate recurring PROVABLE false positives into their own table in `false-positives.local.md`, each with its proof written down (so thread resolution is honest and fast).
 5. Record the bot's operational behavior: does it dedupe? does it vote or block via comment policy? does it comment on generated files? This changes your push strategy.
 
 ## Known false-positive classes (from real-world calibration)

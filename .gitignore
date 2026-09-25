@@ -1,0 +1,2 @@
+# Private calibration (checklist.local.md, false-positives.local.md) never gets committed
+*.local.md

@@ -36,11 +36,13 @@ Then, before pushing to a branch with a PR: invoke `/adversarial-pre-pr`.
 
 ## Calibrate it for YOUR bot
 
-The generic skill works out of the box, but the value multiplies when you calibrate:
+Out of the box the skill reviews against its default, stack-agnostic [checklist.md](skills/adversarial-pre-pr/checklist.md) (9 categories, with .NET/Angular examples marked). The value multiplies when you calibrate:
 
 1. Mine your reviewer's real comments — [references/calibration-azure-devops.md](skills/adversarial-pre-pr/references/calibration-azure-devops.md) walks through the Azure DevOps PR-threads REST API.
-2. Categorize findings by mechanism, count frequencies, reorder the checklist.
-3. Build your provable-false-positive table.
+2. Categorize findings by mechanism, count frequencies, reorder the checklist, and save it as `checklist.local.md` next to `SKILL.md`.
+3. Build your provable-false-positive table in `false-positives.local.md`.
+
+When `checklist.local.md` exists the skill uses it instead of `checklist.md`. `*.local.md` is git-ignored, so your calibration stays private and updating the skill (re-copying the folder or pulling this repo) never overwrites it.
 
 See [references/catalog-dotnet-angular.md](skills/adversarial-pre-pr/references/catalog-dotnet-angular.md) for a real calibration result (anonymized): 219 bot comments distilled into 9 categories with frequencies, plus the false-positive classes that emerged.
 
