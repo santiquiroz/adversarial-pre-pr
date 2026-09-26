@@ -26,8 +26,13 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 - Record the starting point first: `git rev-parse HEAD` → `<pre-fix-sha>`.
 - Fix ALL actionable findings, in severity order, before any push. Large fixes get delegated with exact instructions; nothing is postponed "for another PR" without an explicit, recorded decision.
 - Re-run Phase 1 on your own fixes (`git diff <pre-fix-sha>` covers committed and uncommitted ones) — the bot reviews them in the same push. Repeat until a pass yields no new actionable finding.
-- Mandatory final step: run the project's build + full test suites for every side the diff touches. Inspection never replaces the run.
+- Mandatory final step: run the project's build + full test suites for every side the diff touches (e.g. `dotnet build && dotnet test`, `npm test`, `pytest` — use your repo's real commands and flags). Inspection never replaces the run.
 - One single push with everything: bots that run per-push re-post findings each time — batching means fewer threads and less noise.
+- Resolve the bot's threads honestly: `fixed` when the code changed, `wontFix` only for a provable false positive, with the proof written in the reply.
+
+## Deterministic pipeline gates
+
+The PR build can fail on gates that have nothing to do with the bot: coverage thresholds (line/branch, per side), vetted config files (e.g. a package feed that must not come back), code-generation switches or declarations the build depends on. Record them while calibrating (in `checklist.local.md`) and check them in Phase 2 — a green review with a red build is still a blocked PR.
 
 ## Calibrating your catalog
 
@@ -35,7 +40,7 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 2. Categorize by MECHANISM (null-safety, input validation, error handling, ORM usage, signature drift, test asserts, framework-specific) and count frequency.
 3. Order your checklist by real frequency and save it as `checklist.local.md` next to this file (git-ignored; it replaces `checklist.md`) — review passes become efficient because you look for what the bot actually finds.
 4. Separate recurring PROVABLE false positives into their own table in `false-positives.local.md`, each with its proof written down (so thread resolution is honest and fast).
-5. Record the bot's operational behavior: does it dedupe? does it vote or block via comment policy? does it comment on generated files? This changes your push strategy.
+5. Record the bot's operational behavior: does it dedupe? does it vote or block via comment policy? does it comment on generated files? This changes your push strategy. Record the build policy's deterministic gates too (see above).
 
 ## Known false-positive classes (from real-world calibration)
 
@@ -46,6 +51,7 @@ This skill ships with an example catalog for .NET + Angular (see `references/cat
 | Comments on auto-generated files (ORM migrations, API client proxies) | Hand-edits are lost on next regeneration |
 | Cites rule IDs that don't exist in its own rule store | Rule store inspection |
 | Contradicts itself between runs on the same file | Both comments quoted side by side |
+| Missing validators on a field that is optional by design | The requirement/user story says the field is optional — verify it there before using this row |
 
 ## Red flags — you're bypassing, not reviewing
 

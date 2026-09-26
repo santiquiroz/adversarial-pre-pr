@@ -65,6 +65,7 @@ A false positive qualifies ONLY with proof: the compiler accepts the flagged syn
 
 - Does it dedupe across runs? (Many don't — every push re-posts. Batch your pushes.)
 - Does it comment on generated files even when its own prompt excludes them?
-- Does it vote, or block only via comment resolution?
+- Does it vote, or block only via comment resolution? Which thread statuses close a thread for that policy (typically `fixed` and `wontFix`)?
+- Record the build policy's deterministic gates: the build-validation pipeline can fail the PR regardless of the bot. Read its YAML (and any templates it includes) for coverage thresholds (line/branch, per project or side), config files it vets (e.g. a package feed that must not be reintroduced), and code-generation switches or declarations the build depends on. List each gate with the exact value, so Phase 2 can check it locally.
 
-Fold all of this into your copy of the skill.
+Fold all of this into your copy of the skill (`checklist.local.md`, `false-positives.local.md`).
