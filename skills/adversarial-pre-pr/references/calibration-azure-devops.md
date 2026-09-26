@@ -8,6 +8,8 @@ AI review extensions post as the project's build service identity (e.g. `<Projec
 
 ## 2. Pull the threads
 
+Run these commands from a working folder **outside** any git clone (e.g. `mkdir -p ~/calibration && cd ~/calibration`): the dumps and the CSV hold your bot's real comments, file paths and code excerpts, so they must never land in a working tree where `git add .` could publish them.
+
 ```bash
 ORG="https://dev.azure.com/<your-org>"
 AUTH="Authorization: Bearer $(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv)"
@@ -49,11 +51,11 @@ Repeat for your 5-10 most recent PRs. Filter comments whose author matches the r
 Extract and count first with `scripts/tally_review_threads.py` from a clone of the adversarial-pre-pr repository (Python 3.10+, standard library only, no network; it is not part of the installed skill folder):
 
 ```bash
-python scripts/tally_review_threads.py pr-*-threads.json \
+python <path-to-clone>/scripts/tally_review_threads.py pr-*-threads.json \
   --author-contains "Build Service" --marker "[AI PR Review]" > bot-comments.csv
 ```
 
-It writes one CSV row per reviewer comment (`pr, file, line, status, text, is_generated`) to stdout and a summary by status and by file to stderr. `is_generated` flags `*.Designer.cs`, `*ModelSnapshot.cs` and `*-proxy.ts` by default; pass `--generated '<glob>'` (repeatable) to use your own patterns instead. Those rows feed the "auto-generated file" class in step 5. A file that is not JSON (the HTTP 203 sign-in page) or not a threads response stops it with exit code 2 before any row is written.
+Run it from the working folder of step 2, so `pr-*-threads.json` and `bot-comments.csv` stay out of the clone (its `.gitignore` also ignores both names at the clone root, as a safety net). It writes one CSV row per reviewer comment (`pr, file, line, status, text, is_generated`) to stdout and a summary by status and by file to stderr. `is_generated` flags `*.Designer.cs`, `*ModelSnapshot.cs` and `*-proxy.ts` by default; pass `--generated '<glob>'` (repeatable) to use your own patterns instead. Those rows feed the "auto-generated file" class in step 5. A file that is not JSON (the HTTP 203 sign-in page) or not a threads response stops it with exit code 2 before any row is written.
 
 Bucket every comment by MECHANISM (what code pattern triggered it), not by wording. Typical buckets: input validation, null-safety, error handling, ORM/transactions, signature drift between tests and production, test asserts, language modifiers, framework-specific (UI), security. Count per bucket; sort your checklist by count.
 

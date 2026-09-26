@@ -1,6 +1,10 @@
 # Private calibration (checklist.local.md, false-positives.local.md) never gets committed
 *.local.md
 
+# Thread dumps and CSV from the calibration guide hold real bot comments; anchored so tests/fixtures stay tracked
+/pr-*-threads.json
+/bot-comments.csv
+
 # Local Python environment and caches for scripts/ and tests/
 .venv/
 __pycache__/
