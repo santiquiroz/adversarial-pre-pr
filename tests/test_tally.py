@@ -184,3 +184,37 @@ def test_command_line_writes_utf8_whatever_the_console_encoding(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "validación → ✅" in result.stdout.decode("utf-8")
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        '{"value": [null, 5, "thread"]}',
+        '{"value": [{"comments": [null, {"content": 5}, {"content": ["[AI PR Review] x"]}]}]}',
+        '{"value": [{"comments": "not a list", "threadContext": "not a dict"}]}',
+    ],
+)
+def test_mistyped_threads_and_comments_are_skipped_without_crashing(tmp_path, payload):
+    dump = tmp_path / "pr-11-threads.json"
+    dump.write_text(payload, encoding="utf-8")
+
+    code, out, err = run_main(dump, "--marker", MARKER)
+
+    assert code == 0, err
+    assert parse_csv(out) == []
+
+
+def test_mistyped_line_and_author_still_yield_the_comment(tmp_path):
+    dump = tmp_path / "pr-12-threads.json"
+    dump.write_text(
+        '{"value": [{"status": "active", "threadContext": {"filePath": "/a.cs", "rightFileStart": 7},'
+        ' "comments": [{"author": "bot", "content": "[AI PR Review] y"}]}]}',
+        encoding="utf-8",
+    )
+
+    code, out, _ = run_main(dump, "--marker", MARKER)
+
+    assert code == 0
+    assert parse_csv(out) == [
+        {"pr": "12", "file": "/a.cs", "line": "", "status": "active", "text": "[AI PR Review] y", "is_generated": "false"}
+    ]

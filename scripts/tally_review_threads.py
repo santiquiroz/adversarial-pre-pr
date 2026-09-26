@@ -76,27 +76,39 @@ def load_threads(path):
     return threads
 
 
+def as_dict(value):
+    return value if isinstance(value, dict) else {}
+
+
+def as_list(value):
+    return value if isinstance(value, list) else []
+
+
+def as_text(value):
+    return value if isinstance(value, str) else ""
+
+
 def is_live(item):
-    return not item.get("isDeleted", False)
+    return isinstance(item, dict) and not item.get("isDeleted", False)
 
 
 def author_matches(comment, needle):
     if not needle:
         return True
-    author = comment.get("author") or {}
-    names = f"{author.get('displayName', '')} {author.get('uniqueName', '')}".lower()
+    author = as_dict(comment.get("author"))
+    names = f"{as_text(author.get('displayName'))} {as_text(author.get('uniqueName'))}".lower()
     return needle.lower() in names
 
 
 def is_reviewer_comment(comment, filters):
     if not is_live(comment) or comment.get("commentType") == "system":
         return False
-    content = (comment.get("content") or "").lstrip()
+    content = as_text(comment.get("content")).lstrip()
     return content.startswith(filters.marker) and author_matches(comment, filters.author_contains)
 
 
 def thread_line(context):
-    position = context.get("rightFileStart") or context.get("leftFileStart") or {}
+    position = as_dict(context.get("rightFileStart") or context.get("leftFileStart"))
     line = position.get("line")
     return "" if line is None else str(line)
 
@@ -107,18 +119,18 @@ def is_generated(file_path, patterns):
 
 
 def thread_findings(pr, thread, filters):
-    context = thread.get("threadContext") or {}
-    file_path = context.get("filePath") or ""
+    context = as_dict(thread.get("threadContext"))
+    file_path = as_text(context.get("filePath"))
     return [
         Finding(
             pr=pr,
             file=file_path,
             line=thread_line(context),
-            status=thread.get("status") or "unknown",
-            text=(comment.get("content") or "").strip(),
+            status=as_text(thread.get("status")) or "unknown",
+            text=as_text(comment.get("content")).strip(),
             is_generated=is_generated(file_path, filters.generated),
         )
-        for comment in thread.get("comments") or []
+        for comment in as_list(thread.get("comments"))
         if is_reviewer_comment(comment, filters)
     ]
 
