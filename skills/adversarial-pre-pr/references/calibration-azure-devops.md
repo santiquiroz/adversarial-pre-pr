@@ -46,6 +46,15 @@ Repeat for your 5-10 most recent PRs. Filter comments whose author matches the r
 
 ## 4. Categorize
 
+Extract and count first with `scripts/tally_review_threads.py` from a clone of the adversarial-pre-pr repository (Python 3.10+, standard library only, no network; it is not part of the installed skill folder):
+
+```bash
+python scripts/tally_review_threads.py pr-*-threads.json \
+  --author-contains "Build Service" --marker "[AI PR Review]" > bot-comments.csv
+```
+
+It writes one CSV row per reviewer comment (`pr, file, line, status, text, is_generated`) to stdout and a summary by status and by file to stderr. `is_generated` flags `*.Designer.cs`, `*ModelSnapshot.cs` and `*-proxy.ts` by default; pass `--generated '<glob>'` (repeatable) to use your own patterns instead. Those rows feed the "auto-generated file" class in step 5. A file that is not JSON (the HTTP 203 sign-in page) or not a threads response stops it with exit code 2 before any row is written.
+
 Bucket every comment by MECHANISM (what code pattern triggered it), not by wording. Typical buckets: input validation, null-safety, error handling, ORM/transactions, signature drift between tests and production, test asserts, language modifiers, framework-specific (UI), security. Count per bucket; sort your checklist by count.
 
 ## 5. Separate provable false positives

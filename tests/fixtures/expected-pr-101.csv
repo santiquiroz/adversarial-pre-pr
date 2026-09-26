@@ -1,0 +1,6 @@
+pr,file,line,status,text,is_generated
+101,/src/Api/OrdersController.cs,42,active,[AI PR Review] Validate the request body before using it.,false
+101,/src/Web/app/orders.service.ts,7,fixed,"[AI PR Review] Handle the error branch:
+""subscribe"" has no error callback.",false
+101,/src/Infra/Migrations/SampleDbContextModelSnapshot.cs,120,wontFix,"[AI PR Review] Magic string in column type, consider a constant.",true
+101,,,active,[AI PR Review] PR summary: 3 findings.,false

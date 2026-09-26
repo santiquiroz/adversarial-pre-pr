@@ -1,2 +1,7 @@
 # Private calibration (checklist.local.md, false-positives.local.md) never gets committed
 *.local.md
+
+# Local Python environment and caches for scripts/ and tests/
+.venv/
+__pycache__/
+.pytest_cache/

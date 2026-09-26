@@ -1,0 +1,41 @@
+{
+  "value": [
+    {
+      "id": 1,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Web/app/api/orders-proxy.ts",
+        "rightFileStart": { "line": 3, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Use a typed response instead of any."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Api/OrdersController.cs",
+        "rightFileStart": { "line": 42, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Validate the request body before using it."
+        }
+      ]
+    }
+  ],
+  "count": 2
+}

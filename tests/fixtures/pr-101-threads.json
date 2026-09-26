@@ -1,0 +1,151 @@
+{
+  "value": [
+    {
+      "id": 1,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Api/OrdersController.cs",
+        "rightFileStart": { "line": 42, "offset": 1 },
+        "rightFileEnd": { "line": 42, "offset": 30 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Validate the request body before using it."
+        },
+        {
+          "id": 2,
+          "parentCommentId": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Jane Developer", "uniqueName": "jane@example.com" },
+          "content": "Good catch, fixing."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "status": "fixed",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Web/app/orders.service.ts",
+        "rightFileStart": { "line": 7, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Handle the error branch:\n\"subscribe\" has no error callback."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "status": "wontFix",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Infra/Migrations/SampleDbContextModelSnapshot.cs",
+        "leftFileStart": { "line": 120, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Magic string in column type, consider a constant."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": null,
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "  [AI PR Review] PR summary: 3 findings."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Api/OrdersController.cs",
+        "rightFileStart": { "line": 50, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": true,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Deleted comment, must be skipped."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "status": "active",
+      "isDeleted": true,
+      "threadContext": {
+        "filePath": "/src/Api/OrdersController.cs",
+        "rightFileStart": { "line": 60, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] Comment in a deleted thread, must be skipped."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "isDeleted": false,
+      "properties": { "CodeReviewThreadType": { "$type": "System.String", "$value": "VoteUpdate" } },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "system",
+          "isDeleted": false,
+          "author": { "displayName": "Sample Build Service (sample-org)", "uniqueName": "build-service-0001" },
+          "content": "[AI PR Review] system message, must be skipped"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "status": "active",
+      "isDeleted": false,
+      "threadContext": {
+        "filePath": "/src/Api/OrdersController.cs",
+        "rightFileStart": { "line": 12, "offset": 1 }
+      },
+      "comments": [
+        {
+          "id": 1,
+          "commentType": "text",
+          "isDeleted": false,
+          "author": { "displayName": "Another Bot", "uniqueName": "another-bot" },
+          "content": "[AI PR Review] Same marker, different author."
+        }
+      ]
+    }
+  ],
+  "count": 8
+}
